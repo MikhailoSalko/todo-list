@@ -2,7 +2,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import React, { useState } from 'react';
 import { add } from 'redux/todoSlice';
 
-const Modal = ({ submit }) => {
+const Modal = ({ handleCreate }) => {
   const [nameTodo, setNameTodo] = useState('');
   const [descriptionTodo, setDescriptionTodo] = useState('');
   const handleChange = ({ target }) => {

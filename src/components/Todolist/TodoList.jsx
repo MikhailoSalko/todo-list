@@ -1,16 +1,10 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Todo from 'components/Todo/Todo';
 import { selectTodoList } from 'redux/selectors';
-import { remove, add, update } from 'redux/todoSlice';
 
-const TodoList = () => {
+const TodoList = ({ handleDelete }) => {
   const todoList = useSelector(selectTodoList);
-  const dispatch = useDispatch();
-
-  const handleDelete = id => {
-    dispatch(remove(id));
-  };
 
   return (
     <ul>
