@@ -1,22 +1,50 @@
 import { useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 import TodoList from './Todolist/TodoList';
 import Header from './Header/Header';
-import ModalWindow from './Modal/Modal';
+import { Container } from 'react-bootstrap';
+import { add } from 'redux/todoSlice';
 
 export const App = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [nameTodo, setNameTodo] = useState('');
+  const [descriptionTodo, setDescriptionTodo] = useState('');
 
-  const handleOpenModal = () => setIsOpen(true);
-  const handleCloseModal = () => setIsOpen(false);
+  const dispatch = useDispatch();
+
+  const handleChange = ({ target }) => {
+    target.name === 'nameTodo'
+      ? setNameTodo(target.value)
+      : setDescriptionTodo(target.value);
+  };
+
+  const handleCreate = close => {
+    if (nameTodo.length < 4) {
+      return alert("the name of todo can't be empty or shorter then 3 symbols");
+    }
+    const newTodo = {
+      id: nanoid(),
+      completed: false,
+      title: nameTodo,
+      description: descriptionTodo,
+    };
+    dispatch(add(newTodo));
+    setNameTodo('');
+    setDescriptionTodo('');
+    close();
+  };
+
+  // const handleUpdateTodo = () => {};
 
   return (
     <>
       <Container>
-        <Header handleOpenModal={handleOpenModal} />
-        {isOpen && (
-          <ModalWindow isOpen={isOpen} handleCloseModal={handleCloseModal} />
-        )}
+        <Header
+          nameTodo={nameTodo}
+          descriptionTodo={descriptionTodo}
+          handleChange={handleChange}
+          handleSubmit={handleCreate}
+        />
         <TodoList />
       </Container>
     </>
