@@ -1,7 +1,6 @@
-import React from 'react';
 import { Button, Navbar } from 'react-bootstrap';
 
-const Header = () => {
+const Header = ({ handleOpenModal }) => {
   return (
     <Navbar
       expand="lg"
@@ -9,7 +8,7 @@ const Header = () => {
       bg="primary"
       data-bs-theme="dark"
     >
-      <Button variant="primary" size="lg">
+      <Button variant="primary" size="lg" onClick={handleOpenModal}>
         Open Modal
       </Button>
     </Navbar>
