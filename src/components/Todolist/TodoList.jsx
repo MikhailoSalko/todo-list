@@ -1,18 +1,18 @@
 import { useSelector } from 'react-redux';
 import { ListGroup } from 'react-bootstrap';
 import Todo from 'components/Todo/Todo';
-import { selectTodoList } from 'redux/selectors';
+import { selectTodoList } from 'redux/todo/todoSelectors';
 
-const TodoList = ({ handleDelete }) => {
+const TodoList = () => {
   const todoList = useSelector(selectTodoList);
 
   return (
-    <ListGroup as="ul">
-      {todoList.length > 0 &&
-        todoList.map(todo => (
-          <Todo key={todo.id} todo={todo} handleDelete={handleDelete} />
-        ))}
-    </ListGroup>
+    <>
+      <ListGroup as="ul">
+        {todoList.length > 0 &&
+          todoList.map(todo => <Todo key={todo.id} todo={todo} />)}
+      </ListGroup>
+    </>
   );
 };
 

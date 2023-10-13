@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, CloseButton, Form, ListGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { check, remove } from '../../redux/todoSlice';
+import { check, remove } from '../../redux/todo/todoSlice';
 
 const Todo = ({ todo }) => {
   const dispatch = useDispatch();
@@ -15,25 +15,9 @@ const Todo = ({ todo }) => {
   };
 
   return (
-    // <li className="list-group-item">
-    //   <Form className="col justify-content-between">
-    //     <Form.Check
-    //       className="mb-3"
-    //       inline
-    //       label={todo.title}
-    //       name={todo.title}
-    //       type="checkbox"
-    //       onChange={handleCheck}
-    //       checked={todo.completed}
-    //       id={todo.id}
-    //     />
-    //     <Form.Text>{todo.description}</Form.Text>
-    //     <CloseButton aria-label="Close" onClick={handleDelete} />
-    //   </Form>
-    // </li>
     <ListGroup.Item as="li">
       <Card>
-        <Card.Header className="align-items-center">
+        <Card.Header className="d-flex justify-content-between align-items-start">
           <Form.Check
             inline
             label={todo.title}
@@ -46,8 +30,10 @@ const Todo = ({ todo }) => {
           <CloseButton aria-label="Close" onClick={handleDelete} />
         </Card.Header>
         <Card.Body>
-          <Card.Text>{todo.description}</Card.Text>
-          <Button variant="primary">Update todo</Button>
+          <Card.Text className="mb-5">{todo.description}</Card.Text>
+          <Button variant="outline-primary" onClick={() => {}}>
+            Update todo
+          </Button>
         </Card.Body>
       </Card>
     </ListGroup.Item>

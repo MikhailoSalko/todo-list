@@ -1,18 +1,58 @@
 import ModalWindow from 'components/Modal/Modal';
 import useModalState from 'hooks/useModalState';
-import { Button, Navbar } from 'react-bootstrap';
+import { useState } from 'react';
+import { Button, ButtonGroup, Navbar, ToggleButton } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { update } from 'redux/todo/todoSlice';
+
+const radios = [
+  { value: 'all' },
+  { value: 'completed' },
+  { value: 'in progress' },
+];
 
 const Header = ({ nameTodo, descriptionTodo, handleChange, handleSubmit }) => {
+  const [radioValue, setRadioValue] = useState('all');
   const [isOpen, , handleOpenModal, handleCloseModal] = useModalState(false);
+
+  const dispatch = useDispatch();
+
+  const handleFilter = ({ target }) => {
+    setRadioValue(target.value);
+    dispatch(update(target.value));
+  };
+
   return (
     <>
       <Navbar
         expand="lg"
-        className="bg-body-tertiary p-4 mb-5"
+        className="bg-body-tertiary p-4 mb-2 justify-content-between"
         bg="primary"
         data-bs-theme="dark"
       >
-        <Button variant="primary" size="lg" onClick={handleOpenModal}>
+        <ButtonGroup>
+          {radios.map(({ value }, idx) => (
+            <ToggleButton
+              key={idx}
+              id={`radio-${idx}`}
+              type="radio"
+              variant={
+                idx === 0
+                  ? 'outline-light'
+                  : idx === 1
+                  ? 'outline-success'
+                  : 'outline-warning'
+              }
+              name="filter"
+              value={value}
+              checked={radioValue === value}
+              onChange={handleFilter}
+            >
+              {value}
+            </ToggleButton>
+          ))}
+        </ButtonGroup>
+        <Button variant="outline-primary" size="lg" onClick={handleOpenModal}>
           Open Modal
         </Button>
       </Navbar>

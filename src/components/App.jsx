@@ -4,7 +4,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import TodoList from './Todolist/TodoList';
 import Header from './Header/Header';
 import { Container } from 'react-bootstrap';
-import { add } from 'redux/todoSlice';
+import { add } from 'redux/todo/todoSlice';
 
 export const App = () => {
   const [nameTodo, setNameTodo] = useState('');
@@ -45,6 +45,7 @@ export const App = () => {
           handleChange={handleChange}
           handleSubmit={handleCreate}
         />
+        <h1>TODO list</h1>
         <TodoList />
       </Container>
     </>
