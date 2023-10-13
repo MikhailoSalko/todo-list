@@ -10,7 +10,8 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { todoReducer } from './todoSlice';
+import { todoReducer } from './todo/todoSlice';
+import { filterReducer } from './filter/filterSlice';
 
 const persistConfig = {
   key: 'root',
@@ -21,7 +22,10 @@ const persistConfig = {
 const todoPersistedReducer = persistReducer(persistConfig, todoReducer);
 
 export const store = configureStore({
-  reducer: todoPersistedReducer,
+  reducer: {
+    todo: todoPersistedReducer,
+    filter: filterReducer,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
