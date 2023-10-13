@@ -1,38 +1,13 @@
-import { nanoid } from '@reduxjs/toolkit';
-import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { add } from 'redux/todoSlice';
 
-const ModalWindow = ({ isOpen, handleCloseModal }) => {
-  const [nameTodo, setNameTodo] = useState('');
-  const [descriptionTodo, setDescriptionTodo] = useState('');
-
-  const dispatch = useDispatch();
-
-  const handleChange = ({ target }) => {
-    target.name === 'nameTodo'
-      ? setNameTodo(target.value)
-      : setDescriptionTodo(target.value);
-  };
-
-  const handleCreate = e => {
-    e.preventDefault();
-    if (nameTodo.length < 4) {
-      return alert("the name of todo can't be empty or shorter then 3 symbols");
-    }
-    const newTodo = {
-      id: nanoid(),
-      completed: false,
-      title: nameTodo,
-      description: descriptionTodo,
-    };
-    dispatch(add(newTodo));
-    setNameTodo('');
-    setDescriptionTodo('');
-    handleCloseModal();
-  };
-
+const ModalWindow = ({
+  isOpen,
+  nameTodo,
+  descriptionTodo,
+  handleChange,
+  handleSubmit,
+  handleCloseModal,
+}) => {
   return (
     <Modal backdrop={true} show={isOpen} onHide={handleCloseModal}>
       <Modal.Header closeButton>
@@ -72,8 +47,7 @@ const ModalWindow = ({ isOpen, handleCloseModal }) => {
         <Button
           variant="primary"
           disabled={nameTodo.length === 0}
-          type="submit"
-          onClick={handleCreate}
+          onClick={() => handleSubmit(handleCloseModal)}
         >
           Save Changes
         </Button>
