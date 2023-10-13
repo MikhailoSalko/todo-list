@@ -3,12 +3,17 @@ import { useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import TodoList from './Todolist/TodoList';
 import Header from './Header/Header';
+import ModalWindow from './Modal/Modal';
 import { Container } from 'react-bootstrap';
-import { add, remove, update } from 'redux/todoSlice';
+import { add, update } from 'redux/todoSlice';
 
 export const App = () => {
   const [nameTodo, setNameTodo] = useState('');
   const [descriptionTodo, setDescriptionTodo] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenModal = () => setIsOpen(true);
+  const handleCloseModal = () => setIsOpen(false);
 
   const dispatch = useDispatch();
 
@@ -33,8 +38,11 @@ export const App = () => {
 
   return (
     <>
-      <Header />
       <Container>
+        <Header handleOpenModal={handleOpenModal} />
+        {isOpen && (
+          <ModalWindow isOpen={isOpen} handleCloseModal={handleCloseModal} />
+        )}
         <TodoList />
       </Container>
     </>
