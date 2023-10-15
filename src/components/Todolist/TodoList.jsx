@@ -1,18 +1,35 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ListGroup } from 'react-bootstrap';
 import Todo from 'components/Todo/Todo';
-import useModalState from 'hooks/useModalState';
 import ModalWindow from 'components/Modal/Modal';
 import { selectFilteredTodos } from 'redux/filter/filterSelectors';
+import useModalState from 'hooks/useModalState';
+import { update } from 'redux/todo/todoSlice';
 
-const TodoList = ({
-  nameTodo,
-  descriptionTodo,
-  handleChange,
-  handleUpdateTodo,
-}) => {
-  const [isOpen, , handleOpenModal, handleCloseModal] = useModalState(false);
+const TodoList = () => {
   const todoList = useSelector(selectFilteredTodos);
+  const dispatch = useDispatch();
+  const {
+    isOpen,
+    nameTodo,
+    setNameTodo,
+    descriptionTodo,
+    setDescriptionTodo,
+    handleOpenModal,
+    handleCloseModal,
+    handleChange,
+  } = useModalState(false);
+
+  const handleUpdateTodo = e => {
+    e.preventDefault();
+    if (nameTodo.length < 4) {
+      return alert("the name of todo can't be empty or shorter then 3 symbols");
+    }
+    dispatch(update());
+    setNameTodo('');
+    setDescriptionTodo('');
+    handleCloseModal();
+  };
 
   return (
     <>

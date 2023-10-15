@@ -2,8 +2,10 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { Button, ButtonGroup, Navbar, ToggleButton } from 'react-bootstrap';
 import ModalWindow from 'components/Modal/Modal';
-import useModalState from 'hooks/useModalState';
 import { setFilter } from 'redux/filter/filterSlice';
+import useModalState from 'hooks/useModalState';
+import { add } from 'redux/todo/todoSlice';
+import { nanoid } from '@reduxjs/toolkit';
 
 const radios = [
   { value: 'all' },
@@ -11,11 +13,37 @@ const radios = [
   { value: 'in progress' },
 ];
 
-const Header = ({ nameTodo, descriptionTodo, handleChange, handleSubmit }) => {
+const Header = () => {
   const [radioValue, setRadioValue] = useState('all');
-  const [isOpen, , handleOpenModal, handleCloseModal] = useModalState(false);
+  const {
+    isOpen,
+    nameTodo,
+    setNameTodo,
+    descriptionTodo,
+    setDescriptionTodo,
+    handleOpenModal,
+    handleCloseModal,
+    handleChange,
+  } = useModalState();
 
   const dispatch = useDispatch();
+
+  const handleCreate = e => {
+    e.preventDefault();
+    if (nameTodo.length < 4) {
+      return alert("the name of todo can't be empty or shorter then 3 symbols");
+    }
+    const newTodo = {
+      id: nanoid(),
+      completed: false,
+      title: nameTodo,
+      description: descriptionTodo,
+    };
+    dispatch(add(newTodo));
+    setNameTodo('');
+    setDescriptionTodo('');
+    handleCloseModal();
+  };
 
   const handleFilter = ({ target: { value } }) => {
     setRadioValue(value);
@@ -53,7 +81,7 @@ const Header = ({ nameTodo, descriptionTodo, handleChange, handleSubmit }) => {
           ))}
         </ButtonGroup>
         <Button variant="outline-primary" size="lg" onClick={handleOpenModal}>
-          Open Modal
+          Add new todo
         </Button>
       </Navbar>
       {isOpen && (
@@ -64,7 +92,7 @@ const Header = ({ nameTodo, descriptionTodo, handleChange, handleSubmit }) => {
           descriptionTodo={descriptionTodo}
           handleChange={handleChange}
           handleCloseModal={handleCloseModal}
-          handleSubmit={handleSubmit}
+          handleSubmit={handleCreate}
         />
       )}
     </>

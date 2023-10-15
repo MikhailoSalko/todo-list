@@ -15,7 +15,7 @@ const ModalWindow = ({
         <Modal.Title>{modalTitle}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Todo name</Form.Label>
             <Form.Control
@@ -39,20 +39,20 @@ const ModalWindow = ({
               placeholder="Tomatos, cucambers, potatoes"
             />
           </Form.Group>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+          <Button
+            type="submit"
+            className="m-1"
+            variant="primary"
+            disabled={nameTodo.length === 0}
+          >
+            Save Changes
+          </Button>
         </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleCloseModal}>
-          Close
-        </Button>
-        <Button
-          variant="primary"
-          disabled={nameTodo.length === 0}
-          onClick={() => handleSubmit(handleCloseModal)}
-        >
-          Save Changes
-        </Button>
-      </Modal.Footer>
+      <Modal.Footer></Modal.Footer>
     </Modal>
   );
 };
