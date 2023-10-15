@@ -13,7 +13,11 @@ const todoSlice = createSlice({
     },
     update: (state, { payload }) => {
       console.log(payload);
-      const todo = state.todoList.findIndex(el => el.id === payload.id);
+      const todo = state.todoList.findIndex(el => {
+        console.log(el);
+        return el.id === payload.id;
+      });
+      console.log(todo);
       state.todoList.splice(todo, 1, payload);
     },
     check: (state, { payload }) => {
