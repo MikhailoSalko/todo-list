@@ -1,6 +1,7 @@
 import { Button, Form, Modal } from 'react-bootstrap';
 
 const ModalWindow = ({
+  modalTitle,
   isOpen,
   nameTodo,
   descriptionTodo,
@@ -11,12 +12,12 @@ const ModalWindow = ({
   return (
     <Modal backdrop={true} show={isOpen} onHide={handleCloseModal}>
       <Modal.Header closeButton>
-        <Modal.Title>Add your todo</Modal.Title>
+        <Modal.Title>{modalTitle}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Add the name of todo</Form.Label>
+            <Form.Label>Todo name</Form.Label>
             <Form.Control
               type="text"
               placeholder="Buy fresh vegetables"
@@ -28,7 +29,7 @@ const ModalWindow = ({
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Add the description of todo</Form.Label>
+            <Form.Label>Todo description</Form.Label>
             <Form.Control
               as="textarea"
               name="descriptionTodo"
