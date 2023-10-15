@@ -4,7 +4,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import TodoList from './Todolist/TodoList';
 import Header from './Header/Header';
 import { Container } from 'react-bootstrap';
-import { add } from 'redux/todo/todoSlice';
+import { add, update } from 'redux/todo/todoSlice';
 
 export const App = () => {
   const [nameTodo, setNameTodo] = useState('');
@@ -12,10 +12,8 @@ export const App = () => {
 
   const dispatch = useDispatch();
 
-  const handleChange = ({ target }) => {
-    target.name === 'nameTodo'
-      ? setNameTodo(target.value)
-      : setDescriptionTodo(target.value);
+  const handleChange = ({ target: { name, value } }) => {
+    name === 'nameTodo' ? setNameTodo(value) : setDescriptionTodo(value);
   };
 
   const handleCreate = close => {
@@ -34,7 +32,9 @@ export const App = () => {
     close();
   };
 
-  // const handleUpdateTodo = () => {};
+  const handleUpdateTodo = () => {
+    dispatch(update('good day'));
+  };
 
   return (
     <>
@@ -46,7 +46,12 @@ export const App = () => {
           handleSubmit={handleCreate}
         />
         <h1>TODO list</h1>
-        <TodoList />
+        <TodoList
+          nameTodo={nameTodo}
+          descriptionTodo={descriptionTodo}
+          handleChange={handleChange}
+          handleUpdateTodo={handleUpdateTodo}
+        />
       </Container>
     </>
   );
