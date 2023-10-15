@@ -1,8 +1,16 @@
 export const selectFilterValue = state => state.filter.filter;
-export const getFilteredContacts = ({
-  contacts: { contacts },
+export const selectFilteredTodos = ({
+  todo: { todoList },
   filter: { filter },
-}) =>
-  contacts.filter(({ name }) => {
-    return name.toLowerCase().trim().includes(filter.toLowerCase().trim());
-  });
+}) => {
+  switch (filter) {
+    case 'all':
+      return todoList;
+    case 'completed':
+      return todoList.filter(todo => todo.completed);
+    case 'in progress':
+      return todoList.filter(todo => !todo.completed);
+    default:
+      return todoList;
+  }
+};
