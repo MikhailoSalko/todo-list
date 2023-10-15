@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-const useModalState = () => {
-  const [nameTodo, setNameTodo] = useState('');
-  const [descriptionTodo, setDescriptionTodo] = useState('');
+const useModalState = ({ name = '', description = '' } = {}) => {
+  const [nameTodo, setNameTodo] = useState(name);
+  const [descriptionTodo, setDescriptionTodo] = useState(description);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = () => setIsOpen(true);
