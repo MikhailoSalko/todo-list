@@ -18,14 +18,16 @@ const TodoList = () => {
     handleOpenModal,
     handleCloseModal,
     handleChange,
-  } = useModalState(false);
+  } = useModalState();
 
   const handleUpdateTodo = e => {
     e.preventDefault();
+    console.log(e.target.name);
+    console.log(todoList);
     if (nameTodo.length < 4) {
       return alert("the name of todo can't be empty or shorter then 3 symbols");
     }
-    dispatch(update());
+    dispatch(update({ id: 1, title: nameTodo, description: descriptionTodo }));
     setNameTodo('');
     setDescriptionTodo('');
     handleCloseModal();
