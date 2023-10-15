@@ -1,8 +1,19 @@
-import { Button, Card, CloseButton, Form, ListGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { check, remove } from '../../redux/todo/todoSlice';
+import { Button, Card, CloseButton, Form, ListGroup } from 'react-bootstrap';
+import useModalState from 'hooks/useModalState';
+import { check, remove, update } from '../../redux/todo/todoSlice';
+import ModalWindow from 'components/Modal/Modal';
 
-const Todo = ({ todo, handleOpenModal }) => {
+const Todo = ({ todo }) => {
+  const {
+    isOpen,
+    nameTodo,
+    descriptionTodo,
+    handleOpenModal,
+    handleCloseModal,
+    handleChange,
+  } = useModalState({ name: todo.title, description: todo.description });
+
   const dispatch = useDispatch();
 
   const handleCheck = () => {
@@ -11,6 +22,17 @@ const Todo = ({ todo, handleOpenModal }) => {
 
   const handleDelete = () => {
     dispatch(remove(todo.id));
+  };
+
+  const handleUpdateTodo = e => {
+    e.preventDefault();
+    if (nameTodo.length < 4) {
+      return alert("the name of todo can't be empty or shorter then 3 symbols");
+    }
+    dispatch(
+      update({ id: todo.id, title: nameTodo, description: descriptionTodo })
+    );
+    handleCloseModal();
   };
 
   return (
@@ -37,6 +59,17 @@ const Todo = ({ todo, handleOpenModal }) => {
           </Card.Body>
         </Card>
       </ListGroup.Item>
+      {isOpen && (
+        <ModalWindow
+          modalTitle={'Update your todo'}
+          isOpen={isOpen}
+          nameTodo={nameTodo}
+          descriptionTodo={descriptionTodo}
+          handleChange={handleChange}
+          handleCloseModal={handleCloseModal}
+          handleSubmit={handleUpdateTodo}
+        />
+      )}
     </>
   );
 };
