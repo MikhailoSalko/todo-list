@@ -1,9 +1,9 @@
-import ModalWindow from 'components/Modal/Modal';
-import useModalState from 'hooks/useModalState';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { Button, ButtonGroup, Navbar, ToggleButton } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { update } from 'redux/todo/todoSlice';
+import ModalWindow from 'components/Modal/Modal';
+import useModalState from 'hooks/useModalState';
+import { setFilter } from 'redux/filter/filterSlice';
 
 const radios = [
   { value: 'all' },
@@ -17,9 +17,9 @@ const Header = ({ nameTodo, descriptionTodo, handleChange, handleSubmit }) => {
 
   const dispatch = useDispatch();
 
-  const handleFilter = ({ target }) => {
-    setRadioValue(target.value);
-    dispatch(update(target.value));
+  const handleFilter = ({ target: { value } }) => {
+    setRadioValue(value);
+    dispatch(setFilter(value));
   };
 
   return (
@@ -58,6 +58,7 @@ const Header = ({ nameTodo, descriptionTodo, handleChange, handleSubmit }) => {
       </Navbar>
       {isOpen && (
         <ModalWindow
+          modalTitle={'Add new todo'}
           isOpen={isOpen}
           nameTodo={nameTodo}
           descriptionTodo={descriptionTodo}
