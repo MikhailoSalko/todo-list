@@ -6,7 +6,8 @@ to efficiently manage the application's state.
 
 With the combination of React, React Bootstrap, and Redux, the TODO list project offers 
 users a seamless and interactive task management experience. 
-Users can create, update, and delete tasks while enjoying a smooth and intuitive user interface. 
+Users can create, update, and delete tasks while enjoying a smooth and intuitive user interface.
+Also, users can filter their tasks by all/completed/in progress checks for a more informative display of the list.
 React provides the foundation for building dynamic components, React Bootstrap enhances 
 the visual presentation, and Redux ensures a consistent and organized state management system.
 
